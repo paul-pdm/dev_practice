@@ -1,0 +1,25 @@
+{% extends "patient_first/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{ patient.name }}
+{% endblock %}
+
+{% block body_block %}
+    {% if category %}
+        <h1>{{ category.full_name }}</h1>
+
+        {% if encounter %}
+            <ul>
+            {% for encounter in encounters %}
+                <li><a href="{{ encounter.url }}">{{ encounter.date }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>No encounters currently for the Patient.</strong>
+        {% endif %}
+        <a href="{% url 'patient_first:add_encounter' patient.slug %}">Add Encounter</a>
+    {% else %}
+        The specified patient does not exist!
+    {% endif %}
+{% endblock %}

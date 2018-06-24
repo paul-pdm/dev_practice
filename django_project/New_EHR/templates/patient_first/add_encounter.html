@@ -1,0 +1,37 @@
+{% extends 'patient_first/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Add Encounter
+{% endblock %}
+
+{% block body_block %}
+    <div>
+    {% if patient %}
+
+    <h1>Add a encounter to {{patient.full_name}}</h1>
+
+    <form id="encounter_form" method="post" action="/patient_first/patient/{{ patient.slug }}/add_encounter/">
+
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+            {{ field }}
+        {% endfor %}
+
+        <input type="submit" name="submit" value="Add Encounter" />
+    </form>
+
+    {% else %}
+        The specified patient does not exist!
+    {% endif%}
+
+
+
+    </div>
+
+{% endblock %}

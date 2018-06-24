@@ -1,0 +1,896 @@
+Sub CMS_HourlyFormat()
+'
+' CMS_HourlyFormat
+'
+
+'
+    ActiveSheet.Name = "CMS_Data"
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "CMS_Format"
+    ActiveCell.Formula = "=CMS_Data!A1"
+    Range("A1").Select
+    Selection.AutoFill Destination:=Range("A1:A21"), Type:=xlFillDefault
+    Range("A1:A21").Select
+    Selection.AutoFill Destination:=Range("A1:D21"), Type:=xlFillDefault
+    Range("A1:D21").Select
+    Range("D1").Select
+    Selection.AutoFill Destination:=Range("D1:J1"), Type:=xlFillDefault
+    Range("D1:J1").Select
+    Range("F1").Select
+    Selection.AutoFill Destination:=Range("F1:F21"), Type:=xlFillDefault
+    Range("F1:F21").Select
+    Range("H1").Select
+    Selection.AutoFill Destination:=Range("H1:H21"), Type:=xlFillDefault
+    Range("H1:H21").Select
+    Range("E2").Select
+    ActiveCell.Formula = "=CMS_Data!E2/86400"
+    Range("E2").Select
+    Selection.AutoFill Destination:=Range("E2:E21"), Type:=xlFillDefault
+    Range("E2:E21").Select
+    Selection.NumberFormat = "[m]:ss"
+    Range("G2").Select
+    ActiveCell.Formula = "=CMS_Data!G2/86400"
+    Range("G2").Select
+    Selection.AutoFill Destination:=Range("G2:G21"), Type:=xlFillDefault
+    Range("G2:G21").Select
+    Selection.NumberFormat = "[m]:ss"
+    Range("I2").Select
+    ActiveCell.Formula = "=CMS_Data!I2/86400"
+    Range("I2").Select
+    Selection.AutoFill Destination:=Range("I2:I21"), Type:=xlFillDefault
+    Range("I2:I21").Select
+    Selection.NumberFormat = "[m]:ss"
+    Selection.AutoFill Destination:=Range("I2:J21"), Type:=xlFillDefault
+    Range("I2:J21").Select
+    Range("J2").Select
+
+
+    Range("D22").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    Selection.Borders(xlEdgeLeft).LineStyle = xlNone
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    Selection.Borders(xlEdgeBottom).LineStyle = xlNone
+    Selection.Borders(xlEdgeRight).LineStyle = xlNone
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+    ActiveCell.Formula = "=SUM(D2:D21)"
+    Selection.Font.Bold = True
+
+
+    Range("F22").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    Selection.Borders(xlEdgeLeft).LineStyle = xlNone
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    Selection.Borders(xlEdgeBottom).LineStyle = xlNone
+    Selection.Borders(xlEdgeRight).LineStyle = xlNone
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+    ActiveCell.Formula = "=SUM(F2:F21)"
+    Selection.Font.Bold = True
+
+
+    Range("H22").Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    Selection.Borders(xlEdgeLeft).LineStyle = xlNone
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    Selection.Borders(xlEdgeBottom).LineStyle = xlNone
+    Selection.Borders(xlEdgeRight).LineStyle = xlNone
+    Selection.Borders(xlInsideVertical).LineStyle = xlNone
+    Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
+    ActiveCell.Formula = "=SUM(H2:H21)"
+    Selection.Font.Bold = True
+
+    Range("C23").Select
+    ActiveCell.Formula = "=MAX(C2:C21)"
+    Range("E23").Select
+    ActiveCell.Formula = "=MAX(E2:E21)"
+
+    Cells.Select
+    Selection.Copy
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Application.CutCopyMode = False
+
+
+    'this just turns off an alert that pops up with deleting a worksheet
+    Application.DisplayAlerts = False
+    'throwing out the garbage
+    Sheets("CMS_Data").Delete
+    'turning back on the alerts
+    Application.DisplayAlerts = True
+
+    Range("C2:J21").Select
+
+End Sub
+
+
+_______________________________________________________________________________________________
+
+
+Sub thatSum()
+    Range("B19").Formula = "=SUM(B12:U13)"
+    Range("B19").Select
+End Sub
+
+_______________________________________________________________________________________________
+
+Sub Apps_Backlog()
+'
+' Apps_Backlog Macro
+'
+
+'
+    Dim lastRow As Long
+
+    lastRow = Range("A" & Rows.Count).End(xlUp).Row
+
+    ActiveSheet.Name = "Processed_Apps"
+
+    'Adding Reference Variables
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "calls"
+    Range("A1").Formula = "61+ Days"
+    Range("A2").Formula = "38-60 Days"
+    Range("A3").Formula = "32-37 Days"
+    Range("A4").Formula = "31 Days"
+    Range("A5").Formula = "Due 1 Day"
+    Range("A6").Formula = "Due 2-7 Days"
+    Range("A7").Formula = "Due 8-30 Days"
+
+
+    'Accounts for application processed on Saturday
+    Range("D3").Formula = Date
+    Range("C3").Formula = "=TEXT(D3,""DDD"" )"
+    Range("C4").Formula = "=IF(C3=""Mon"",D3-2,D3)"
+    Range("C4").NumberFormat = "mm/dd/yyyy"
+
+
+    'Formatting Data Sheet
+    Sheets("Processed_Apps").Select
+    lastRow = Range("A" & Rows.Count).End(xlUp).Row
+
+
+    Range("E:F").EntireColumn.Insert
+    Range("E1").Formula = "Days_Since"
+    Range("E2").Formula = "=calls!$C$4-D2"
+    Range("E2").Select
+    Selection.AutoFill Destination:=Range("E2:E" & lastRow)
+
+    Range("F1").Formula = "Date_Range"
+    Range("F2").Formula = _
+        "=IF(E:E>60,Calls!$A$1,IF(E:E>37,Calls!$A$2,IF(E:E>31,Calls!$A$3,IF(E:E>30,Calls!$A$4,IF(E:E>29,Calls!$A$5,IF(E:E>23,Calls!$A$6,Calls!$A$7))))))"
+    Range("F2").Select
+    Selection.AutoFill Destination:=Range("F2:F" & lastRow)
+
+    Range("P1").EntireColumn.Insert
+    Range("P1").Formula = "YES/NO"
+    Range("P2").Select
+    ActiveCell.Formula = "=IF(TYPE(O:O)=2,""YES"",""NO"")"
+    Selection.AutoFill Destination:=Range("P2:P" & lastRow)
+
+    Range("AN1").EntireColumn.Insert
+    Range("AN1").Formula = "APP_DEF_DATE"
+    Range("AN2").Select
+    ActiveCell.Formula = "=DATEVALUE(AM:AM)"
+    Range("AN2").Select
+    Selection.NumberFormat = "mm/dd/yyyy"
+    Selection.AutoFill Destination:=Range("AN2:AN" & lastRow)
+
+    'Creating Pivots
+    Dim DSheet As Worksheet
+    Dim PSheet As Worksheet
+    Dim PCache As PivotCache
+    Dim PTable As PivotTable
+    Dim lastCol As Long
+    Dim PRange As Range
+
+    'Create new worksheet
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "Pivot"
+    Set PSheet = Worksheets("Pivot")
+    Set DSheet = Worksheets("Processed_Apps")
+
+    'Define Data Range
+    lastRow = DSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    lastCol = DSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+    Set PRange = DSheet.Cells(1, 1).Resize(lastRow, lastCol)
+
+
+    'Define Pivot Cache
+    Set PCache = ActiveWorkbook.PivotCaches.Create _
+    (SourceType:=xlDatabase, SourceData:=PRange)
+
+    'Insert Blank Pivot Table
+    Set PTable = PCache.CreatePivotTable(TableDestination:=PSheet.Cells(3, 1), _
+    TableName:="pivot")
+
+
+
+    ActiveSheet.PivotTables("pivot").AddDataField ActiveSheet.PivotTables( _
+        "pivot").PivotFields("appc_fs_file_date"), _
+        "Count of appc_fs_file_date", xlCount
+
+    With ActiveSheet.PivotTables("pivot").PivotFields("appc_is_telephone_interview")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+        With ActiveSheet.PivotTables("pivot").PivotFields("appc_deferral_date")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("pivot").PivotFields("Date_Range")
+        .Orientation = xlRowField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("pivot").PivotFields("YES/NO")
+        .Orientation = xlColumnField
+        .Position = 1
+    End With
+
+    Range("A16").Select
+    ActiveCell.Formula = "Applications Overdue*"
+    Range("A17").Select
+    ActiveCell.Formula = "Applications Coming Due (7 days)*"
+    Range("A18").Select
+    ActiveCell.Formula = "Applications Coming Due (7 days) with no Interview Start date"
+    Range("A19").Select
+    ActiveCell.Formula = "Application Interviews Deferred"
+    Range("A20").Select
+    ActiveCell.Formula = "Application Interviews Deferred and Overdue"
+    Range("A21").Select
+    ActiveCell.Formula = "Overdue with No Interview Started"
+    Range("A22").Select
+    ActiveCell.Formula = "Application Interviews Deferred"
+
+    Range("B16").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIF(Processed_Apps!F:F,calls!A1:A4))"
+    Range("B17").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIF(Processed_Apps!F:F,calls!A5:A6))"
+    Range("B18").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Processed_Apps!F:F,calls!A5:A6,Processed_Apps!P:P,""NO""))"
+    Range("B19").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Processed_Apps!AN:AN,"">=""&calls!C4))"
+    Range("B20").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Processed_Apps!F:F,calls!A1:A4,Processed_Apps!AN:AN,"">=""&calls!C4))"
+    Range("B21").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Processed_Apps!F:F,calls!A1:A4,Processed_Apps!AD:AD,""Y"",Processed_Apps!P:P,""NO""))"
+    Range("B22").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Processed_Apps!AN:AN,"">=""&calls!C4,Processed_Apps!AD:AD,""Y""))"
+
+    With Range("A16:A22")
+        .Font.Bold = True
+        .ColumnWidth = 36
+        .WrapText = True
+    End With
+    With Range("A16:B22").Borders
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+    End With
+    With Range("B16:B22")
+        .VerticalAlignment = xlCenter
+        .HorizontalAlignment = xlCenter
+    End With
+
+    Range("A15").Select
+    ActiveCell.Formula = "GET MATCHED #"
+    With Range("A15")
+        .Font.Size = 18
+        .Font.Bold = True
+        .ColumnWidth = 36
+        .Font.Color = vbRed
+        .WrapText = True
+    End With
+
+
+End Sub
+
+_______________________________________________________________________________________________
+
+Sub Daily_Management()
+'
+' Daily_Management Macro
+'
+
+'
+    Dim lastRow As Long
+
+    lastRow = Range("A" & Rows.Count).End(xlUp).Row
+
+    'Renaming and Adjusting Date Worksheet
+    ActiveSheet.Name = "Combined"
+    Range("AZ1").EntireColumn.Insert
+    Range("AZ1").Select
+    ActiveCell.Formula = "AVG_DAYS"
+    Range("AZ2").Select
+    ActiveCell.Formula = "=AY2-H2"
+    Selection.AutoFill Destination:=Range("AZ2:AZ" & lastRow)
+
+
+
+    'Creating Pivots
+    Dim DSheet As Worksheet
+    Dim PSheet As Worksheet
+    Dim PCache As PivotCache
+    Dim PTable As PivotTable
+    Dim lastCol As Long
+'    Dim PRange As Range
+
+    'Create new worksheet
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "Pivot"
+'    Sheets("Combined").Select
+    Set PSheet = Worksheets("Pivot")
+    Set DSheet = Worksheets("Combined")
+
+    'Define Data Range
+    lastRow = DSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    lastCol = DSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+'    Set PRange = DSheet.Cells(1, 1).Resize(lastRow, lastCol)
+
+
+'Adding Simple Pivot
+    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
+        "Combined!R1C1:R" & lastRow & "C" & lastCol, Version:=xlPivotTableVersion14).CreatePivotTable _
+        TableDestination:="Pivot!R3C1", TableName:="pivot", DefaultVersion _
+        :=xlPivotTableVersion14
+    Sheets("Pivot").Select
+    ActiveSheet.PivotTables("pivot").AddDataField ActiveSheet.PivotTables( _
+        "pivot").PivotFields("file_date"), "Count of file_date", xlCount
+
+
+
+'Adding Formulas
+
+    Range("A10").Select
+    ActiveCell.Formula = "Total application (Timeliness)"
+    Range("A11").Select
+    ActiveCell.Formula = "cases  accepted"
+    Range("A12").Select
+    ActiveCell.Formula = "cases rejected"
+    Range("A13").Select
+    ActiveCell.Formula = "Total application pending"
+    Range("A14").Select
+    ActiveCell.Formula = "Documents Incomplete"
+    Range("A15").Select
+    ActiveCell.Formula = "Total applications  have a timeliness"
+    Range("A16").Select
+    ActiveCell.Formula = "total applications completed timely"
+    Range("A17").Select
+    ActiveCell.Formula = "Total Expedited Applications"
+    Range("A18").Select
+    ActiveCell.Formula = "Expedited SNAP Timeliness"
+    Range("A19").Select
+    ActiveCell.Formula = "-On-Demand"
+    Range("A20").Select
+    ActiveCell.Formula = "-ACE"
+    Range("A21").Select
+    ActiveCell.Formula = "-In Center"
+    Range("A22").Select
+    ActiveCell.Formula = "Cases without Interview Start Date"
+    Range("A23").Select
+    ActiveCell.Formula = "Average Age of Interview Start Date"
+
+    Range("B10").Select
+    ActiveCell.Formula = "=SUMPRODUCT(--(LEN(Combined!A:A)>10))"
+    Range("B11").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Combined!K:K,{""AC"";""CL"";""SI""}))"
+    Range("B12").Select
+    ActiveCell.Formula = "=COUNTIFS(Combined!K:K,""RJ"")"
+    Range("B13").Select
+    ActiveCell.Formula = "=COUNTIFS(Combined!K:K,""AP"")"
+    Range("B14").Select
+    ActiveCell.Formula = "=COUNTIFS(Combined!K:K,""RJ"",Combined!J:J,""V21"")"
+    Range("B15").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIF(Combined!R:R,{""Yes"";""NO""}))"
+    Range("B16").Select
+    ActiveCell.Formula = "=COUNTIF(Combined!R:R,""Yes"")"
+    Range("B17").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Combined!L:L,""Y"",Combined!R:R,{""Yes"";""No""}))"
+    Range("B18").Select
+    ActiveCell.Formula = "=COUNTIFS(Combined!L:L,""Y"",Combined!R:R,""Yes"")"
+    Range("B19").Select
+    ActiveCell.Formula = "=SUMPRODUCT(SUMIFS(Combined!AZ:AZ,Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"",Combined!B:B,{""F20"";""F21"";""F22"";""F26"";""F28""},Combined!AV:AV,""Y"",Combined!AY:AY,""<>""&"""",Combined!L:L,""Y""))/SUMPRODUCT(COUNTIFS(Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"",Combined!B:B,{""F20"";""F21"";""F22"";""F26"";""F28""},Combined!AV:AV,""Y"",Combined!AY:AY,""<>""&"""",Combined!L:L,""Y""))"
+    Range("B20").Select
+    ActiveCell.Formula = "=SUMPRODUCT(SUMIFS(Combined!AZ:AZ,Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"",Combined!B:B,{""F02"";""F13"";""F14"";""F15"";""F19"";""F40"";""F45"";""F46"";""F53"";""F54"";""F61"";""F79"";""F99""},Combined!AV:AV,""Y"",Combined!AY:AY,""<>""&"""",Combined!L:L,""Y""))/SUMPRODUCT(COUNTIFS(Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"",Combined!B:B,{""F02"";""F13"";""F14"";""F15"";""F19"";""F40"";""F45"";""F46"";""F53"";""F54"";""F61"";""F79"";""F99""},Combined!AV:AV,""Y"",Combined!AY:AY,""<>""&"""",Combined!L:L,""Y""))"
+    Range("B21").Select
+    ActiveCell.Formula = "=SUMPRODUCT(SUMIFS(Combined!AZ:AZ,Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"",Combined!AV:AV,""N"",Combined!AY:AY,""<>""&"""",Combined!L:L,""Y""))/SUMPRODUCT(COUNTIFS(Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"", Combined!AV:AV,""N"",Combined!AY:AY,""<>""&"""",Combined!L:L,""Y""))"
+    Range("B22").Select
+    ActiveCell.Formula = "=COUNTIFS(Combined!L:L,""Y"")-COUNTIFS(Combined!L:L,""Y"",Combined!AY:AY,""<>""&"""")"
+    Range("B23").Select
+    ActiveCell.Formula = "=SUMPRODUCT(SUMIFS(Combined!AZ:AZ,Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"",Combined!B:B,{""F54"";""F40"";""F46"";""F19"";""F53"";""F02"";""F14"";""F45"";""F13"";""F99"";""F79"";""F15"";""F61""},Combined!AV:AV,""Y""))/SUMPRODUCT(COUNTIFS(Combined!AZ:AZ,""<=99"",Combined!AZ:AZ,"">=0"",Combined!B:B,{""F54"";""F40"";""F46"";""F19"";""F53"";""F02"";""F14"";""F45"";""F13"";""F99"";""F79"";""F15"";""F61""},Combined!AV:AV,""Y""))"
+
+    With Range("A10:A23")
+        .Font.Bold = True
+        .ColumnWidth = 36
+        .WrapText = True
+    End With
+
+    With Range("A10:B23").Borders
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+    End With
+        With Range("B10:B23")
+        .VerticalAlignment = xlCenter
+        .HorizontalAlignment = xlCenter
+    End With
+
+End Sub
+
+_______________________________________________________________________________________________
+
+Sub Recert_BackLog()
+'
+' Recert_BackLog Macro
+'
+
+'
+    Dim lastRow As Long
+    Dim filename1 As String
+    Dim filename2 As String
+    Dim mDate As String
+
+    lastRow = Range("A" & Rows.Count).End(xlUp).Row
+
+    ActiveSheet.Name = "Recert"
+
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "calls"
+    Range("D4").Formula = Date
+    Range("D5").Formula = _
+        "=TEXT(""RawDate_"",)&TEXT(MIN(DATEVALUE(Recert!E:E)),""MMMM"")&TEXT(""Backlog"",)&TEXT(D4,""mm.dd.yy"")"
+    filename1 = Range("D5").Value
+    Range("D6").Formula = _
+        "=TEXT(MIN(DATEVALUE(Recert!E:E)),""MMMM"")&TEXT(""SpecialCases_"",)&TEXT(D4,""mm.dd.yy"")"
+    filename2 = Range("D6").Value
+    Range("A1").Formula = _
+        "=TEXT(""Prior "",)&TEXT(D4,""MMM DD"")&TEXT("" date"",)"
+    Range("A2").Formula = _
+        "=TEXT(""Deferred After "",)&TEXT(D4,""MMM DD"")&TEXT("" date"",)"
+    Range("A3").Formula = "Cases with no Deferral Date"
+    Range("A4").Formula = "=EOMONTH(D4,0)+1"
+    Range("A4").Select
+    Selection.NumberFormat = "m/d/yyyy"
+    Range("A5").Formula = "=TEXT(MIN(DATEVALUE(Recert!E:E)),""MMMM"")"
+    mDate = Range("A5").Value
+
+    Sheets("Recert").Select
+    Range("AG1").EntireColumn.Insert
+    Range("AG1").Select
+    ActiveCell.Formula = "special_date"
+    Range("AG2").Select
+    ActiveCell.Formula = "=DATEVALUE(AF2)"
+    Range("AG2").Select
+    Selection.NumberFormat = "mm/dd/yyyy"
+    Selection.AutoFill Destination:=Range("AG2:AG" & lastRow)
+    Range("AG1").Select
+    Range("CM:CN").EntireColumn.Insert
+    Range("CM1").Select
+    ActiveCell.Formula = "1st Def Date"
+    Range("CN1").Select
+    ActiveCell.Formula = "1st Def Day"
+    Range("CM2").Select
+    ActiveCell.Formula = "=DATEVALUE(CL2)"
+    Range("CN2").Select
+    ActiveCell.Formula = _
+        "=IF(ISERR(CM:CM),calls!$A$3,IF(CM:CM<calls!$D$4,calls!$A$1,calls!$A$2))"
+    Range("CM2").Select
+    Selection.NumberFormat = "m/d/yyyy"
+    Range("CM2:CN2").Select
+    Selection.AutoFill Destination:=Range("CM2:CN" & lastRow)
+
+    Range("CQ:CS").EntireColumn.Insert
+    Range("CQ1").Select
+    ActiveCell.Formula = "last def date"
+    Range("CR1").Select
+    ActiveCell.Formula = "Def Day"
+    Range("CQ2").Select
+    ActiveCell.Formula = "=DATEVALUE(CP2)"
+    Range("CQ2").Select
+    Selection.NumberFormat = "m/d/yyyy"
+    Range("CR2").Select
+    ActiveCell.Formula = _
+        "=IF(ISERR(CQ:CQ),CN:CN,IF(CQ:CQ>=calls!$D$4,calls!$A$2,IF(CQ:CQ<calls!$D$4,calls!$A$1,CN:CN)))"
+    Range("CS1").Select
+    ActiveCell.Formula = "YEAR/MONTH"
+    Range("CS2").Select
+    ActiveCell.Formula = "=TEXT(AF2,""YYYY/MM"")"
+    Range("CQ2:CS2").Select
+    Selection.AutoFill Destination:=Range("CQ2:CS" & lastRow)
+    Range("A1").Select
+
+    Sheets.Add After:=Sheets(Sheets.Count)
+    ActiveSheet.Name = "Recert_Counts"
+    Range("A1").Select
+    ActiveCell.Formula = "Total Scheduled for month:"
+    Range("A2").Select
+    ActiveCell.Formula = "Already Processed:"
+    Range("A3").Select
+    ActiveCell.Formula = "Closed:"
+    Range("A4").Select
+    ActiveCell.Formula = "Pending 'Failed to keep':"
+    Range("A5").Select
+    ActiveCell.Formula = "Total cases that continues to be in 'AC':"
+    Range("A6").Select
+    ActiveCell.Formula = "Total pending closing:"
+    Range("A7").Select
+    ActiveCell.Formula = "Total Outstanding"
+    Range("A8").Select
+    ActiveCell.Formula = _
+        "Cases that have a LDSS 4826 submitted with appointment status(FAIL STATUS, RESC, and Blank status)"
+    Range("A9").Select
+    ActiveCell.Formula = "Fail"
+    Range("A11").Select
+    ActiveCell.Formula = "Blank"
+    Range("A10").Select
+    ActiveCell.Formula = "Reschedule"
+    Range("A12").Select
+    ActiveCell.Formula = "Submitted and kept interview"
+    Range("A13").Select
+    ActiveCell.Formula = "Deferred to future date"
+    Range("A14").Select
+    ActiveCell.Formula = "Actionable"
+    Range("B1").Select
+    ActiveCell.Formula = "=SUMPRODUCT(--(LEN(Recert!A:A)>11))"
+    Range("B2").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIF(Recert!AG:AG,"">=""&calls!A4))"
+    Range("B3").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<""&calls!A4,Recert!AC:AC,{""CL"";""RJ""}))"
+    Range("B4").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""FAIL""))"
+    Range("B5").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""<>FAIL""))"
+    Range("B6").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""<>FAIL"",Recert!AB:AB,""Pending Closing""))"
+    Range("B7").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""<>FAIL"",Recert!AB:AB,""<>Pending Closing""))"
+    Range("B8").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""<>KEPT"",Recert!AB:AB,""<>Pending Closing"",Recert!I:I,""YES""))"
+    Range("B9").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""FAIL"",Recert!AB:AB,""<>Pending Closing"",Recert!I:I,""YES""))"
+    Range("B11").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,"""",Recert!AB:AB,""<>Pending Closing"",Recert!I:I,""YES""))"
+    Range("B10").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""RESC"",Recert!AB:AB,""<>Pending Closing"",Recert!I:I,""YES""))"
+    Range("B12").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<=""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""KEPT"",Recert!AB:AB,""<>Pending Closing"",Recert!I:I,""YES""))"
+    Range("B13").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""KEPT"",Recert!AB:AB,""<>Pending Closing"",Recert!I:I,""YES"",Recert!CR:CR,calls!A2))"
+    Range("B14").Select
+    ActiveCell.Formula = "=SUMPRODUCT(COUNTIFS(Recert!AG:AG,""<""&calls!A4,Recert!AC:AC,{""AC"";""SI""},Recert!Q:Q,""KEPT"",Recert!AB:AB,""<>Pending Closing"",Recert!I:I,""YES"",Recert!CR:CR,""<>""&calls!A2))"
+    With Range("A1:A14")
+        .Font.Bold = True
+        .ColumnWidth = 36
+        .WrapText = True
+    End With
+    With Range("A1:B14").Borders
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+    End With
+    With Range("B1:B14")
+        .VerticalAlignment = xlCenter
+        .HorizontalAlignment = xlCenter
+    End With
+    Range("B1").Font.Bold = True
+    Range("B14").Font.Bold = True
+
+
+    'Creating Pivots
+    Dim DSheet As Worksheet
+    Dim PSheet As Worksheet
+    Dim PCache As PivotCache
+    Dim PTable As PivotTable
+    Dim lastCol As Long
+    Dim PRange As Range
+
+    'Create new worksheet
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "kept_int"
+    Set PSheet = Worksheets("kept_int")
+    Set DSheet = Worksheets("Recert")
+
+    'Define Data Range
+    lastRow = DSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    lastCol = DSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+    Set PRange = DSheet.Cells(1, 1).Resize(lastRow, lastCol)
+
+
+    'Define Pivot Cache
+    Set PCache = ActiveWorkbook.PivotCaches.Create _
+    (SourceType:=xlDatabase, SourceData:=PRange)
+
+    'Insert Blank Pivot Table
+    Set PTable = PCache.CreatePivotTable(TableDestination:=PSheet.Cells(3, 1), _
+    TableName:="kept_intpivot")
+
+
+
+    ActiveSheet.PivotTables("kept_intpivot").AddDataField ActiveSheet.PivotTables( _
+        "kept_intpivot").PivotFields("original_appointment_date"), _
+        "Count of original_appointment_date", xlCount
+
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("ldss_4826_received")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("appointment_status")
+        .Orientation = xlRowField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("disposition")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("case_status")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("special_date")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("YEAR/MONTH")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+
+    Dim pt As PivotTable
+    Dim pf As PivotField
+    Dim pi As PivotItem
+    Dim rLastCell As Range
+    Dim an As Date
+    Dim afterDate As String
+
+    an = DateSerial(Year(Date), Month(Date) + 1, 0) + 1
+
+    Set pt = ActiveSheet.PivotTables("kept_intpivot")
+    Set pf = pt.PivotFields("special_date")
+
+
+    For Each pi In pf.PivotItems
+        If pi.Value = "#VALUE!" Then pi.Visible = False
+        If pi.Value > an Then pi.Visible = False
+    Next
+
+
+    ActiveSheet.PivotTables("kept_intpivot").PivotFields("case_status").CurrentPage _
+        = "(All)"
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("case_status")
+        .PivotItems("CL").Visible = False
+        .PivotItems("RJ").Visible = False
+    End With
+
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("disposition")
+        .PivotItems("Pending Closing").Visible = False
+    End With
+    ActiveSheet.PivotTables("kept_intpivot").PivotFields("ldss_4826_received"). _
+        CurrentPage = "YES"
+    With ActiveSheet.PivotTables("kept_intpivot").PivotFields("appointment_status")
+        .PivotItems("FAIL").Visible = False
+        .PivotItems("(blank)").Visible = False
+    End With
+
+    With ActiveSheet.PivotTables(1).TableRange1
+        Set rLastCell = .Cells(.Rows.Count, .Columns.Count)
+    End With
+    rLastCell.Select
+    Selection.ShowDetail = True
+    ActiveSheet.Name = "Actionable List"
+
+    'Create new worksheet
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "actionable_pivot"
+    Set PSheet = Worksheets("actionable_pivot")
+    Set DSheet = Worksheets("Actionable List")
+
+    'Define Data Range
+    lastRow = DSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    lastCol = DSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+    Set PRange = DSheet.Cells(1, 1).Resize(lastRow, lastCol)
+    afterDate = Worksheets("calls").Range("A2")
+
+    'Define Pivot Cache
+    Set PCache = ActiveWorkbook.PivotCaches.Create _
+    (SourceType:=xlDatabase, SourceData:=PRange)
+
+    'Insert Blank Pivot Table
+    Set PTable = PCache.CreatePivotTable(TableDestination:=PSheet.Cells(3, 1), _
+    TableName:="actionable_pivot")
+
+
+
+    ActiveSheet.PivotTables("actionable_pivot").AddDataField ActiveSheet.PivotTables( _
+        "actionable_pivot").PivotFields("original_appointment_date"), _
+        "Count of original_appointment_date", xlCount
+
+    With ActiveSheet.PivotTables("actionable_pivot").PivotFields("toe_digit")
+        .Orientation = xlRowField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("actionable_pivot").PivotFields("Def Day")
+        .Orientation = xlColumnField
+        .Position = 1
+    End With
+
+
+    If Worksheets("Recert_Counts").Range("B13") > 0 Then
+        ActiveSheet.PivotTables("actionable_pivot").PivotFields("Def Day").PivotItems(afterDate).Visible = False
+    Else
+    GoTo MyNextStep
+    End If
+
+
+MyNextStep:
+
+    'Create outstanding pivot
+    Worksheets("kept_int").Copy After:=Worksheets("kept_int")
+    ActiveSheet.Name = "outstanding"
+    Sheets("outstanding").PivotTables(1).Name = "outstanding_pivot"
+
+    ActiveSheet.PivotTables("outstanding_pivot").PivotFields("ldss_4826_received").ClearAllFilters
+    ActiveSheet.PivotTables("outstanding_pivot").PivotFields("appointment_status").ClearAllFilters
+    ActiveSheet.PivotTables("outstanding_pivot").PivotFields("appointment_status").PivotItems("FAIL").Visible = False
+
+    'Create "Case List" from outstanding list
+    With ActiveSheet.PivotTables(1).TableRange1
+        Set rLastCell = .Cells(.Rows.Count, .Columns.Count)
+    End With
+    rLastCell.Select
+    Selection.ShowDetail = True
+    ActiveSheet.Name = "Case List"
+
+    'Create new worksheet for actual outstanding pivot
+    Worksheets.Add(After:=Sheets(Sheets.Count)).Name = "outstanding_pivot"
+    Set PSheet = Worksheets("outstanding_pivot")
+    Set DSheet = Worksheets("Case List")
+
+    'Define Data Range (data sheet is "Case List")
+    lastRow = DSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    lastCol = DSheet.Cells(1, Columns.Count).End(xlToLeft).Column
+    Set PRange = DSheet.Cells(1, 1).Resize(lastRow, lastCol)
+    'afterDate = Worksheets("calls").Range("A2")
+
+    'Define Pivot Cache
+    Set PCache = ActiveWorkbook.PivotCaches.Create _
+    (SourceType:=xlDatabase, SourceData:=PRange)
+
+    'Insert Blank Pivot Table
+    Set PTable = PCache.CreatePivotTable(TableDestination:=PSheet.Cells(3, 1), _
+    TableName:="outstanding_pivot")
+
+    'Finally select filters
+    ActiveSheet.PivotTables("outstanding_pivot").AddDataField ActiveSheet.PivotTables( _
+        "outstanding_pivot").PivotFields("original_appointment_date"), _
+        "Count of original_appointment_date", xlCount
+
+    With ActiveSheet.PivotTables("outstanding_pivot").PivotFields("toe_digit")
+        .Orientation = xlRowField
+        .Position = 1
+    End With
+    With ActiveSheet.PivotTables("outstanding_pivot").PivotFields("Def Day")
+        .Orientation = xlColumnField
+        .Position = 1
+    End With
+
+    Sheets("Recert_Counts").Select
+
+
+    Const csPath1 As String = "\\execapps1\fiaops\Office of Research and Program Monitoring\NCA Working Folder\ACTIVE STAFF\Maripadavil,Paul\Recert_Backlog\Working_File\"
+    Const csPath2 As String = "\\execapps1\fiaops\Office of Research and Program Monitoring\NCA Working Folder\ACTIVE STAFF\Maripadavil,Paul\Recert_Backlog\Case_List\"
+
+    ActiveWorkbook.SaveAs Filename:=csPath1 & filename1 & ".xlsx"
+
+
+    ActiveWorkbook.Sheets(Array("Case List", "actionable_pivot", "outstanding_pivot")).Copy
+
+    Sheets("Case List").Select
+    Columns("F:F").Select
+    Selection.Delete Shift:=xlToLeft
+    Selection.Delete Shift:=xlToLeft
+    Columns("G:N").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("J:K").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("K:K").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("L:N").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("M:M").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("N:AE").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("O:BB").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("P:R").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("Q:Z").Select
+    Selection.Delete Shift:=xlToLeft
+    Range("A1").Select
+
+    ActiveWorkbook.SaveAs Filename:=csPath2 & filename2 & ".xlsx"
+
+
+
+End Sub
+
+_______________________________________________________________________________________________
+
+
+Sub Match_Number()
+
+    Dim lastRow As Long
+    lastRow = Range("A" & Rows.Count).End(xlUp).Row
+
+    ActiveSheet.Name = "Matched"
+    Columns("B:B").Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Selection.ClearContents
+    Range("B1").Formula = "Matched"
+    Range("B2").Select
+    ActiveCell.Formula = "=VLOOKUP(A2,Processed_Apps!$A:$A,1,FALSE)"
+    Selection.AutoFill Destination:=Range("B2:B" & lastRow)
+    Range("C6").Formula = "Total_Apps"
+    Range("D6").Formula = "=COUNTIF(B:B,""#N/A"")"
+
+    With Range("C6")
+        .Font.Bold = True
+        .ColumnWidth = 36
+        .WrapText = True
+    End With
+    With Range("C6:D6").Borders
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+    End With
+    With Range("D6")
+        .VerticalAlignment = xlCenter
+        .HorizontalAlignment = xlCenter
+    End With
+    Range("D6").Select
+
+End Sub
+
+_______________________________________________________________________________________________
+
+Sub AppTurnOver_AvgDays()
+'
+' Daily_Management Macro
+'
+
+'
+    Dim lastRow As Long
+
+    lastRow = Range("A" & Rows.Count).End(xlUp).Row
+
+    ActiveSheet.Name = "Combined"
+    Range("AP:AQ").EntireColumn.Insert
+    Range("AP1").Select
+    ActiveCell.Formula = "AVG_DAYS"
+    Range("AP2").Select
+    ActiveCell.Formula = "=R2-AO2"
+    Selection.AutoFill Destination:=Range("AP2:AP" & lastRow)
+    Range("AQ1").Select
+    ActiveCell.Formula = "-Average Number of AppTurnOver"
+    Range("AQ2").Select
+    ActiveCell.Formula = "=AVERAGEIFS(AP:AP,AP:AP,""<=99"",AP:AP,"">=0"",I:I,""YES"")"
+
+    With Range("AQ1")
+        .Font.Bold = True
+        .ColumnWidth = 36
+        .WrapText = True
+    End With
+    With Range("AQ1").Borders
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+    End With
+
+End Sub

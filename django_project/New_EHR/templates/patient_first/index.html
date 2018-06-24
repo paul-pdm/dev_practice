@@ -1,0 +1,22 @@
+{% extends 'patient_first/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Index
+{% endblock %}
+{% block body_block %}
+<div>
+    <h1>Patient's First Homepage</h1>
+</div>
+<div>
+    <h3>Patient List</h3>
+</div>
+{% if patients %}
+    {% for patient in patients %}
+    <li>
+        <a href="{% url 'patient_first:show_patient' patient.slug %}"{{ patient.name }}></a>
+    </li>
+    {% endfor %}
+{% else %}
+    <strong>There are no patient's present</strong>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{%  for p in pats %}
+    {% if p == act_pat %}
+        <li>
+        <strong>
+            <a href="{% url 'patient_first:show_patient' p.slug %}">{{ c.full_name }}</a>
+        </strong>
+        </li>
+    {% else %}
+        <li>
+            <a href="{% url 'patient_first:show_patient' p.slug %}">{{ c.full_name }}</a>
+        </li>
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load rango_template_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width-device-width,
+                                    initial-scale=1, shrick-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/faviocn.ico' %}">
+    <title>
+         New EHR{% block title_block %}Patient's First{% endblock %}
+    </title>
+    <!--Bootstrap core CSS -->
+    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href=
+              "http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
+            rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
+    <button type="button" class="navbar-toggler hidden-sm-up"
+            data-toggle="collapse" data-target="navbar"
+            aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">New Patient EHR</a>
+    <div id="navbar">
+        <nav class="nav navbar-nav pull-xs-left">
+            <a class="nav-item nav-link" href="{% url 'rango:index' %}">Home</a>
+            <a class="nav-item nav-link" href="{% url 'rango:about' %}">About</a>
+
+            {% if user.is_authenticated %}
+            <a class="nav-item nav-link"
+               href="{% url 'rango:add_patient' %}">Add a New Patient</a>
+            <a class="nav-item nav-link"
+               href="{% url 'rango:logout' %}">Logout</a>
+            {% else %}
+            <a class="nav-item nav-link"
+               href="{% url 'rango:register' %}">Register Here</a>
+            <a class="nav-item nav-link"
+                href="{% url 'rango:login' %}">Login</a>
+            {% endif %}
+        </nav>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 co-md-2 sidebar">
+            {% block sidebar_block %}
+                {% get_patient_list patient %}
+            {% endblock %}
+        </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        {% block body_block %}{% endblock %}
+    </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript ================================================== -->
+<!-- Placed at the end of the document so the pages load faster --> <script
+src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"> </script>
+<script
+src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"> </script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> <script
+src=
+      "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.j\
+s">
+</script> </body>
+</html>

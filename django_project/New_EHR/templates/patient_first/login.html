@@ -1,0 +1,14 @@
+{% extends 'patient_first/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Login
+{% endblock %}
+{% block body_block %}
+<h1>Login to Patient's First</h1>
+<form id="login_form" method="post" action="{% url 'patient_first:login' %}">
+{% csrf_token %}
+Username: <input type="text" name="username" value="" size="50" /> <br />
+Password: <input type="password" name="password" value="" size="50" /> <br />
+<input type="submit" value="submit" />
+</form>
+{% endblock %}

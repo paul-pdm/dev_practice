@@ -1,0 +1,34 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+    Index
+{% endblock %}
+{% block body_block %}
+        <div>
+    <h1>Hello</h1>
+        {% if user.is_authenticated %}
+            {{ user.username }}!
+        {% else %}
+            hey there partner!
+        {% endif %}
+        </div>
+        <div>
+            <div>
+                <h3>Most Recent Patients</h3>
+            </div>
+        {% if patients %}
+        <u1>
+            {% for patient in patients %}
+            <li>
+                <a href="{% url 'rango:show_patient' patient.slug %}">{{ patient.name }}</a>
+            </li>
+            {% endfor %}
+        </u1>
+    {% else %}
+        <strong>There are no patients present.</strong>
+    {% endif %}
+        </div>
+
+
+
+{% endblock %}

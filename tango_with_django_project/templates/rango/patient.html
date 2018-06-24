@@ -1,0 +1,25 @@
+{% extends "rango/base.html" %}
+{% load staticfiles %}
+
+{% block title_block %}
+    {{ patient.name }}
+{% endblock %}
+
+{% block body_block %}
+    {% if patient %}
+        <h1>{{ patient.name }}</h1>
+
+        {% if pages %}
+            <ul>
+            {% for page in pages %}
+                <li><a href="{{ page.note }}">{{ page.title }}</a></li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <strong>No pages currently in patient.</strong>
+        {% endif %}
+        <a href="{% url 'rango:add_page' patient.slug %}">Add a Page</a>
+    {% else %}
+        The specified patient does not exist!
+    {% endif %}
+{% endblock %}
